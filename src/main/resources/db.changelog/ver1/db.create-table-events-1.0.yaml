@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_events
+      author: nick_k
+      changes:
+        - createTable:
+            tableName: events
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: device_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: dev_event
+              - column:
+                  name: type
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payload
+                  type: jsonb
+              - column:
+                  name: time_of_add
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false

@@ -1,6 +1,9 @@
 server:
   port: 8080
 spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:db.changelog/db.changelog-master.yaml
   datasource:
     url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/iot}
     username: ${POSTGRES_USER:postgres}
@@ -9,5 +12,4 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     show-sql: false

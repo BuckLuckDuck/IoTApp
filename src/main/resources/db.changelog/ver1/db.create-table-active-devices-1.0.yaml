@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_active-devices
+      author: nick_k
+      changes:
+        - createTable:
+            tableName: active_devices
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: device_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: dev_active
+              - column:
+                  name: first_action
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_action
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false

@@ -1,6 +1,5 @@
 package com.example.iotapp.models;
 
-import org.hibernate.annotations.JdbcTypeCode;
 import org.postgresql.util.PGobject;
 
 import javax.persistence.*;
@@ -25,8 +24,9 @@ public class Event {
     @Column(name = "payload", columnDefinition = "jsonb")
     private PGobject payload;
 
+    @Column(name = "time_of_add")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date addTime;
+    private Date time_of_add;
 
     public Event() {
     }
@@ -63,11 +63,11 @@ public class Event {
         this.payload = payload;
     }
 
-    public Date getAddTime() {
-        return addTime;
+    public Date getTime_of_add() {
+        return time_of_add;
     }
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
+    public void setTime_of_add(Date addTime) {
+        this.time_of_add = addTime;
     }
 }

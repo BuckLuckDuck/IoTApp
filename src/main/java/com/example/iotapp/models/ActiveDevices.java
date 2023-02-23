@@ -15,9 +15,11 @@ public class ActiveDevices {
     @OneToOne
     private Device device;
 
+    @Column(name = "first_action")
     @Temporal(TemporalType.TIMESTAMP)
     private Date firstActionDate;
 
+    @Column(name = "last_action")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastActionDate;
 }

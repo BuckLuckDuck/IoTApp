@@ -22,8 +22,9 @@ public class Device {
     private String key;
 
     // TODO
+    @Column(name = "date_of_add")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date addTime;
+    private Date dateOfAdd;
 
     public Device() {
     }
@@ -60,11 +61,11 @@ public class Device {
         this.key = key;
     }
 
-    public Date getAddTime() {
-        return addTime;
+    public Date getDateOfAdd() {
+        return dateOfAdd;
     }
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
+    public void setDateOfAdd(Date addTime) {
+        this.dateOfAdd = addTime;
     }
 }
