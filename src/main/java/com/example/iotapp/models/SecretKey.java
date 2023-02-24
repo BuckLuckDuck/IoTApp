@@ -1,15 +1,13 @@
 package com.example.iotapp.models;
 
 public class SecretKey {
+    private final String KEY;
 
-    private final String key;
-
-    // TODO - Creation of keys using BCrypt, if Spring security allowed
     public SecretKey() {
-        key = String.valueOf((int)(Math.random() * 9999));
+        this.KEY = SecretKeyGenerator.generate(12);
     }
 
-    public String getKey() {
-        return key;
+    public String getKEY() {
+        return KEY;
     }
 }

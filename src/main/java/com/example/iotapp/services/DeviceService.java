@@ -2,6 +2,7 @@ package com.example.iotapp.services;
 
 import com.example.iotapp.models.Device;
 import com.example.iotapp.models.SecretKey;
+import com.example.iotapp.models.SecretKeyGenerator;
 import com.example.iotapp.repositories.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,17 +24,17 @@ public class DeviceService {
         if (deviceRepository.getDeviceBySerialNumber(device.getSerialNumber()) != null)
             throw new IllegalArgumentException();
 
-        SecretKey newKey = new SecretKey();
-        device.setKey(newKey.getKey());
+
+        SecretKeyGenerator keyGenerator = new SecretKeyGenerator();
+        SecretKey key = new SecretKey();
+        device.setKey(keyGenerator.encodeStr(key.getKEY()));
 
         device.setDateOfAdd(new Date());
         deviceRepository.save(device);
-        return newKey;
+        return key;
     }
 
     public static boolean validateKey(Device device, String key) {
-        if (device.getKey().equals(key))
-            return true;
-        return false;
+        return SecretKeyGenerator.decodeStr(key, device.getKey());
     }
 }
