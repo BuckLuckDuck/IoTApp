@@ -1,7 +1,8 @@
 package com.example.iotapp.models;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "devices")
@@ -17,6 +18,9 @@ public class Device {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "type")
+    private String type;
 
     @Column(name = "key", unique = true, nullable = false)
     private String key;
@@ -51,6 +55,14 @@ public class Device {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getKey() {

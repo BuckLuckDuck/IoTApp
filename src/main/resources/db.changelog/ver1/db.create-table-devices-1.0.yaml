@@ -25,6 +25,9 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: type
+                  type: VARCHAR(255)
+              - column:
                   name: key
                   type: VARCHAR(255)
                   constraints:
