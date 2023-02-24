@@ -9,7 +9,7 @@ public class SecretKey {
         key = String.valueOf((int)(Math.random() * 9999));
     }
 
-    public String getValue() {
+    public String getKey() {
         return key;
     }
 }

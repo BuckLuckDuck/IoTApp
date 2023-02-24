@@ -24,10 +24,16 @@ public class DeviceService {
             throw new IllegalArgumentException();
 
         SecretKey newKey = new SecretKey();
-        device.setKey(newKey.getValue());
+        device.setKey(newKey.getKey());
 
         device.setDateOfAdd(new Date());
         deviceRepository.save(device);
         return newKey;
+    }
+
+    public static boolean validateKey(Device device, String key) {
+        if (device.getKey().equals(key))
+            return true;
+        return false;
     }
 }

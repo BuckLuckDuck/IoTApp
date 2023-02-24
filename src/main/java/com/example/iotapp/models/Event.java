@@ -1,12 +1,17 @@
 package com.example.iotapp.models;
 
-import org.postgresql.util.PGobject;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "events")
+@TypeDef(name = "json", typeClass = JsonType.class)
 public class Event {
 
     @Id
@@ -21,8 +26,9 @@ public class Event {
     private String type;
 
     // TODO
+    @Type(type = "json")
     @Column(name = "payload", columnDefinition = "jsonb")
-    private PGobject payload;
+    private Map<String, Object> payload = new HashMap<>();
 
     @Column(name = "time_of_add")
     @Temporal(TemporalType.TIMESTAMP)
@@ -55,12 +61,13 @@ public class Event {
         this.type = type;
     }
 
-    public PGobject getPayload() {
+    public Map<String, Object> getPayload() {
         return payload;
     }
 
-    public void setPayload(PGobject payload) {
+    public Event setPayload(Map<String, Object> payload) {
         this.payload = payload;
+        return this;
     }
 
     public Date getTime_of_add() {

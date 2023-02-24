@@ -25,7 +25,6 @@ public class Device {
     @Column(name = "key", unique = true, nullable = false)
     private String key;
 
-    // TODO
     @Column(name = "date_of_add")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfAdd;
