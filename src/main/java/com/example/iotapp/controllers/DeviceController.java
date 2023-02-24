@@ -1,6 +1,7 @@
 package com.example.iotapp.controllers;
 
 import com.example.iotapp.models.Device;
+import com.example.iotapp.models.SecretKey;
 import com.example.iotapp.services.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,8 @@ public class DeviceController {
     }
 
     @PostMapping(value = "/device")
-    public ResponseEntity<String> addNewDevice(@RequestBody Device device) {
-        String key = deviceService.addNewDevice(device);
-
+    public ResponseEntity<SecretKey> addNewDevice(@RequestBody Device device) {
+        SecretKey key = deviceService.addNewDevice(device);
         return new ResponseEntity<>(key, HttpStatus.CREATED);
     }
 }
