@@ -19,6 +19,7 @@ public class DeviceService {
     }
 
     public SecretKey addNewDevice(Device device) {
+        // TODO - should write special GlobalExceptionHandler
         if (deviceRepository.getDeviceBySerialNumber(device.getSerialNumber()) != null)
             throw new IllegalArgumentException();
 
