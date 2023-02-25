@@ -10,7 +10,10 @@ public interface ActiveDevicesRepository extends JpaRepository<ActiveDevices, Lo
 
     ActiveDevices findByDevice_Id(Long id);
 
-    @Query(value = "SELECT * from active_devices WHERE last_action < now() - INTERVAL '30 minutes'",
+    @Query(value = "SELECT * FROM active_devices WHERE last_action < now() - INTERVAL '30 minutes'",
             nativeQuery = true)
     List<ActiveDevices> findAllWithExpirationTime();
+
+    @Query(value = "SELECT * FROM active_devices", nativeQuery = true)
+    List<ActiveDevices> getAllActiveDevices();
 }

@@ -44,6 +44,10 @@ public class ActiveDevicesService {
         activeDevicesRepository.save(newActiveDevice);
     }
 
+    public List<ActiveDevices> getAllActiveDevices() {
+        return activeDevicesRepository.getAllActiveDevices();
+    }
+
     @Scheduled(cron = "10 * * * * ?")
     public final void updateActiveDevices() {
         List<ActiveDevices> listOfInactiveDevices =
@@ -51,5 +55,4 @@ public class ActiveDevicesService {
 
         activeDevicesRepository.deleteAll(listOfInactiveDevices);
     }
-
 }
