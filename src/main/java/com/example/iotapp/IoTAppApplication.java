@@ -12,10 +12,6 @@ import java.util.TimeZone;
 public class IoTAppApplication {
 
     public static void main(String[] args) {
-        // A crutch so that the application works correctly with the database.
-        // It's better not to do that
-        TimeZone.setDefault( TimeZone.getTimeZone("UTC"));
-
         SpringApplication.run(IoTAppApplication.class, args);
     }
 

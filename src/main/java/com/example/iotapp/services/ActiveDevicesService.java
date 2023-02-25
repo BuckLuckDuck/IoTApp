@@ -7,7 +7,7 @@ import com.example.iotapp.repositories.EventRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,14 +27,14 @@ public class ActiveDevicesService {
 
         ActiveDevices activeDevice = activeDevicesRepository.findByDevice_Id(device.getId());
         if (activeDevice != null) {
-            Date lastAction = eventRepository.findTimeOfLastAction(device.getId());
+            LocalDateTime lastAction = eventRepository.findTimeOfLastAction(device.getId());
             activeDevice.setLastActionDate(lastAction);
             activeDevicesRepository.save(activeDevice);
             return;
         }
 
-        Date firstAction = eventRepository.findTimeOfFirstAction(device.getId());
-        Date lastAction = eventRepository.findTimeOfLastAction(device.getId());
+        LocalDateTime firstAction = eventRepository.findTimeOfFirstAction(device.getId());
+        LocalDateTime lastAction = eventRepository.findTimeOfLastAction(device.getId());
 
         ActiveDevices newActiveDevice = new ActiveDevices();
         newActiveDevice.setDevice(device);
@@ -48,11 +48,10 @@ public class ActiveDevicesService {
         return activeDevicesRepository.getAllActiveDevices();
     }
 
-    @Scheduled(cron = "10 * * * * ?")
+    @Scheduled(cron = "1 * * * * ?")
     public final void updateActiveDevices() {
         List<ActiveDevices> listOfInactiveDevices =
                 activeDevicesRepository.findAllWithExpirationTime();
-
         activeDevicesRepository.deleteAll(listOfInactiveDevices);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.iotapp.models;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "active_devices")
@@ -16,12 +16,10 @@ public class ActiveDevices {
     private Device device;
 
     @Column(name = "first_action")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date firstActionDate;
+    private LocalDateTime firstActionDate;
 
     @Column(name = "last_action")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastActionDate;
+    private LocalDateTime lastActionDate;
 
     public ActiveDevices() {
     }
@@ -42,19 +40,19 @@ public class ActiveDevices {
         this.device = device;
     }
 
-    public Date getFirstActionDate() {
+    public LocalDateTime getFirstActionDate() {
         return firstActionDate;
     }
 
-    public void setFirstActionDate(Date firstActionDate) {
+    public void setFirstActionDate(LocalDateTime firstActionDate) {
         this.firstActionDate = firstActionDate;
     }
 
-    public Date getLastActionDate() {
+    public LocalDateTime getLastActionDate() {
         return lastActionDate;
     }
 
-    public void setLastActionDate(Date lastActionDate) {
+    public void setLastActionDate(LocalDateTime lastActionDate) {
         this.lastActionDate = lastActionDate;
     }
 }

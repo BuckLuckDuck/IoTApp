@@ -1,6 +1,7 @@
 package com.example.iotapp.models;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -25,8 +26,7 @@ public class Device {
     private String key;
 
     @Column(name = "date_of_add")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOfAdd;
+    private LocalDateTime dateOfAdd;
 
     public Device() {
     }
@@ -71,11 +71,11 @@ public class Device {
         this.key = key;
     }
 
-    public Date getDateOfAdd() {
+    public LocalDateTime getDateOfAdd() {
         return dateOfAdd;
     }
 
-    public void setDateOfAdd(Date addTime) {
+    public void setDateOfAdd(LocalDateTime addTime) {
         this.dateOfAdd = addTime;
     }
 }

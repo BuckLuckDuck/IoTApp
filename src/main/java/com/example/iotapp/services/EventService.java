@@ -7,7 +7,7 @@ import com.example.iotapp.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Service
 public class EventService {
@@ -34,7 +34,7 @@ public class EventService {
             return false;
 
         event.setDevice(device);
-        event.setTime_of_add(new Date());
+        event.setTime_of_add(LocalDateTime.now());
         eventRepository.save(event);
 
         activeDevicesService.updateTable(device);

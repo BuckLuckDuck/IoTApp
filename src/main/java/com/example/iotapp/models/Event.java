@@ -5,7 +5,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,14 +25,12 @@ public class Event {
     @Column(name = "type", nullable = false)
     private String type;
 
-    // TODO
     @Type(type = "json")
     @Column(name = "payload", columnDefinition = "jsonb")
     private Map<String, Object> payload = new HashMap<>();
 
     @Column(name = "time_of_add")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date time_of_add;
+    private LocalDateTime time_of_add;
 
     public Event() {
     }
@@ -70,11 +68,11 @@ public class Event {
         return this;
     }
 
-    public Date getTime_of_add() {
+    public LocalDateTime getTime_of_add() {
         return time_of_add;
     }
 
-    public void setTime_of_add(Date addTime) {
+    public void setTime_of_add(LocalDateTime addTime) {
         this.time_of_add = addTime;
     }
 }

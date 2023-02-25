@@ -7,9 +7,13 @@ services:
     ports:
       - 5432:5432
     environment:
+      TZ: "Asia/Tomsk"
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: iot
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
 
 networks:
   default:
