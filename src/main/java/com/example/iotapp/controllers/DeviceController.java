@@ -25,4 +25,9 @@ public class DeviceController {
         SecretKey key = deviceService.addNewDevice(device);
         return new ResponseEntity<>(key, HttpStatus.CREATED);
     }
+
+    @GetMapping("/device")
+    public ResponseEntity<Device> getInfoAboutDevice(@RequestParam @NonNull String serialNumber) {
+        return new ResponseEntity<>(deviceService.getInfoAboutDevice(serialNumber), HttpStatus.OK);
+    }
 }

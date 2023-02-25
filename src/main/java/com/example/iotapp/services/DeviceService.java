@@ -34,6 +34,10 @@ public class DeviceService {
         return key;
     }
 
+    public Device getInfoAboutDevice(String serialNumber) {
+        return deviceRepository.getDeviceBySerialNumber(serialNumber);
+    }
+
     public static boolean validateKey(Device device, String key) {
         return SecretKeyGenerator.decodeStr(key, device.getKey());
     }
