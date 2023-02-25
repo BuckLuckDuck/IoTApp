@@ -1,8 +1,7 @@
 package com.example.iotapp.controllers;
 
 import com.example.iotapp.models.Device;
-import com.example.iotapp.models.SecretKey;
-import com.example.iotapp.models.SecretKeyGenerator;
+import com.example.iotapp.utility.SecretKey;
 import com.example.iotapp.services.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

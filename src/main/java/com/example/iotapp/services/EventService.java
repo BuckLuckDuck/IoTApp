@@ -14,11 +14,17 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final DeviceRepository deviceRepository;
+    private final ActiveDevicesService activeDevicesService;
 
     @Autowired
-    public EventService(EventRepository eventRepository, DeviceRepository deviceRepository) {
+    public EventService(
+            EventRepository eventRepository,
+            DeviceRepository deviceRepository,
+            ActiveDevicesService activeDevicesService
+    ) {
         this.eventRepository = eventRepository;
         this.deviceRepository = deviceRepository;
+        this.activeDevicesService = activeDevicesService;
     }
 
     public boolean createEvent(Event event, String serialNumber, String key) {
@@ -30,6 +36,8 @@ public class EventService {
         event.setDevice(device);
         event.setTime_of_add(new Date());
         eventRepository.save(event);
+
+        activeDevicesService.updateTable(device);
 
         return true;
     }

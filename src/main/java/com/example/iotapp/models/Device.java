@@ -2,7 +2,6 @@ package com.example.iotapp.models;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "devices")

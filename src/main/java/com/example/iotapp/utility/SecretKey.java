@@ -1,4 +1,4 @@
-package com.example.iotapp.models;
+package com.example.iotapp.utility;
 
 public class SecretKey {
     private final String KEY;

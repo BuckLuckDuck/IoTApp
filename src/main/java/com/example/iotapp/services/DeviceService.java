@@ -1,8 +1,8 @@
 package com.example.iotapp.services;
 
 import com.example.iotapp.models.Device;
-import com.example.iotapp.models.SecretKey;
-import com.example.iotapp.models.SecretKeyGenerator;
+import com.example.iotapp.utility.SecretKey;
+import com.example.iotapp.utility.SecretKeyGenerator;
 import com.example.iotapp.repositories.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

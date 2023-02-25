@@ -1,4 +1,4 @@
-package com.example.iotapp.models;
+package com.example.iotapp.utility;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
