@@ -48,7 +48,7 @@ public class ActiveDevicesService {
         return activeDevicesRepository.getAllActiveDevices();
     }
 
-    @Scheduled(cron = "1 * * * * ?")
+    @Scheduled(cron = "10 * * * * ?")
     public final void updateActiveDevices() {
         List<ActiveDevices> listOfInactiveDevices =
                 activeDevicesRepository.findAllWithExpirationTime();

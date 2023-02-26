@@ -24,9 +24,12 @@ public class DeviceService {
     }
 
     public SecretKey addNewDevice(Device device) {
-        // TODO - should write special GlobalExceptionHandler
-        if (deviceRepository.findDeviceBySerialNumber(device.getSerialNumber()) != null)
-            throw new IllegalArgumentException();
+        // TODO - change exception
+        deviceRepository.findDeviceBySerialNumber(device.getSerialNumber()).orElseThrow(
+                () -> new DeviceNotFoundException(
+                        "Device with serial number " + device.getSerialNumber() + " already exists"
+                ))
+;
 
 
         SecretKeyGenerator keyGenerator = new SecretKeyGenerator();
@@ -38,7 +41,6 @@ public class DeviceService {
         return key;
     }
 
-    // TODO - exception handler
     public Device getInfoAboutDevice(String serialNumber) {
         return deviceRepository.findDeviceBySerialNumber(serialNumber).orElseThrow(
                 () -> new DeviceNotFoundException("Device with serial number " + serialNumber + " not found"));
@@ -58,6 +60,12 @@ public class DeviceService {
             return deviceRepository.findAllByType(type, pr);
         else
             return deviceRepository.findAllByTypeAndDate(type, date, pr);
+    }
+
+    public Device getDeviceBySerialNumber(String serialNumber) {
+        return deviceRepository.findDeviceBySerialNumber(serialNumber).orElseThrow(
+                () -> new DeviceNotFoundException(
+                        "Device with serial number " + serialNumber + " not found"));
     }
 
     public static boolean validateKey(Device device, String key) {

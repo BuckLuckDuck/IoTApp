@@ -6,6 +6,8 @@ import com.example.iotapp.repositories.DeviceRepository;
 import com.example.iotapp.repositories.EventRepository;
 import com.example.iotapp.utility.DeviceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,24 +16,24 @@ import java.time.LocalDateTime;
 public class EventService {
 
     private final EventRepository eventRepository;
-    private final DeviceRepository deviceRepository;
+    private final DeviceService deviceService;
     private final ActiveDevicesService activeDevicesService;
 
     @Autowired
     public EventService(
             EventRepository eventRepository,
-            DeviceRepository deviceRepository,
+            DeviceService deviceService,
             ActiveDevicesService activeDevicesService
     ) {
         this.eventRepository = eventRepository;
-        this.deviceRepository = deviceRepository;
+        this.deviceService = deviceService;
         this.activeDevicesService = activeDevicesService;
     }
 
     public boolean createEvent(Event event, String serialNumber, String key) {
 
-        Device device = deviceRepository.findDeviceBySerialNumber(serialNumber).orElseThrow(
-                () -> new DeviceNotFoundException("Device with serial number " + serialNumber + " not found"));;
+        Device device = deviceService.getDeviceBySerialNumber(serialNumber);
+        // TODO
         if (!DeviceService.validateKey(device, key))
             return false;
 
@@ -42,5 +44,17 @@ public class EventService {
         activeDevicesService.updateTable(device);
 
         return true;
+    }
+
+    public Page<Event> getAllEventsWithSerialNumber(
+            String serialNumber,
+            String date,
+            Integer offset,
+            Integer limit) {
+        PageRequest pr = PageRequest.of(offset, limit);
+        Device device = deviceService.getDeviceBySerialNumber(serialNumber);
+        return date == null ?
+                eventRepository.findAllByDeviceId(device.getId(), pr) :
+                eventRepository.findAllByDeviceIdAndDate(device.getId(), date, pr);
     }
 }
