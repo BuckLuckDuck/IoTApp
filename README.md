@@ -9,9 +9,13 @@
 ### 1. Добавление нового устройства
 ***
 **Следуя требованиям задания:** *В ответ возвращается секретный ключ*
+
 **Endpoint:** `http://localhost:8080/api/device` 
+
 **Method:** `POST`
-**Request:**
+
+<ins>**Request:**<ins>
+
 **body/json**
 ```
 {
@@ -20,15 +24,18 @@
     "type" : "Комнатный девайс"
 }
 ```
-**Response:**
+<ins>**Response:**<ins>
+
 `Status: 200 OK`
+
 **body/json** 
 ```
 {
     "key": "lpKVHwqnP3QF"
 }
 ```
-**Ошибки:**
+<ins>**Ошибки:**<ins>
+
 `Status: 400 Bad Request`
 ```
 {
@@ -39,9 +46,13 @@
 ### 2. Сохранение события от IoT устройства
 ***
 Реализовано с помощью передачи **серийного номера** и **ключа**. Можно было реализовать только с помощью **ключа**, но в таком случае это было бы более ресурсозатратно.
+
 **Endpoint:** `http://localhost:8080/api/events?serialNumber=907310503-44529630000&key=lpKVHwqnP3QF`
+
 **Method:** `POST`
-**Request:**
+
+<ins>**Request:**<ins>
+
 **body/json**
 ```
 {
@@ -52,12 +63,16 @@
     }
 }
 ```
-**Response:** 
+<ins>**Response:** <ins>
+
 `Status: 201 Created`.
 
-**Ошибки:**
-**Response:** 
+<ins>**Ошибки:**<ins>
+
+<ins>**Response:**<ins>
+
 `Status 404 Not Found`
+
 **body/json**
 ```
 {
@@ -67,16 +82,22 @@
 ```
 
 Или
-**Response:** 
+
+<ins>**Response:**<ins> 
+
 `Status: 400 Bad Request`, если был отправлен невалидный **ключ**.
 ### 3. Получить информацию об активных устройствах
 ***
-Неактивные более 30 минут устройства удаляются.
-Каждые 10 минут сервер отправляет запрос на поиск таковых устройств, можно поставить промежуток и меньше (например 1 минуту), но это увеличит нагрузку на сервер.
+Неактивные более 30 минут устройства удаляются. Каждые 10 минут сервер отправляет запрос на поиск таковых устройств, можно поставить промежуток и меньше (например 1 минуту), но это увеличит нагрузку на сервер.
+
 **Endpoint:** `http://localhost:8080/api/active`
+
 **Method:** `GET`
-**Response:**
+
+<ins>**Response:**<ins>
+
 `Status 200 OK`
+
 **body/json**
 ```
 [
@@ -124,10 +145,15 @@
 ### 4. Получить информацию о конкретном устройстве по серийному номеру
 ***
 **Серийный номер** отправляется параметром в строке запроса.
+
 **Endpoint:** `http://localhost:8080/api/device?serialNumber=907310502-44529630000`
+
 **Method:** `GET`
-**Response:**
+
+<ins>**Response:**<ins>
+
 `Status 200 OK`
+
 **body/json**
 ```
 {
@@ -139,9 +165,13 @@
     "dateOfAdd": "2023-02-26T21:18:07.011"
 }
 ```
-**Ошибки:**
-**Response:** 
+
+<ins>**Ошибки:**<ins>
+
+**Response:**
+
 `Status 404 Not Found`
+
 **body/json**
 ```
 {
@@ -157,7 +187,7 @@
 3. `date`, фильтр по дате добавления. Принимается в формате 'yyyy-MM-dd'. **Необязательный параметр.**
 4. `type`, фильтр по типу устройства. **Необязательный параметр.**
 
-**Endpoints examples:** `
+**Endpoints examples:**
 - `http://localhost:8080/api/device/all`
 - `http://localhost:8080/api/device/all?limit=10&offset=0`
 - `http://localhost:8080/api/device/all?limit=10&offset=0&date=2023-02-26`
@@ -165,8 +195,11 @@
 - `http://localhost:8080/api/device/all?limit=3&offset=0&type=Кухонный+девайс&date=2023-02-26`
 
 **Method:** `GET` 
-**Response:**
+
+<ins>**Response:**<ins>
+
 `Status 200 OK`
+
 **body/json**
 ```
 {
@@ -236,8 +269,11 @@
 - `http://localhost:8080/api/events?serialNumber=907310502+-+44529630000&limit=3&offset=0&date=2023-02-26`
 
 **Method:** `GET` 
-**Response:**
+
+<ins>**Response:**<ins>
+
 `Status 200 OK`
+
 **body/json**
 ```
 {
@@ -311,8 +347,11 @@
 - `http://localhost:8080/api/events/statistics?dateAfter=2023-01-15&dateBeforer=2023-06-01`, получение статистики событий после 15-Января-2023 и до 01-Июня-2023
 
 **Method:** `GET` 
-**Response:**
+
+<ins>**Response:**<ins>
+
 `Status 200 OK`
+
 **body/json**
 ```
 [
