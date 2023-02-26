@@ -15,17 +15,25 @@ import java.util.Optional;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    @Query(value = "SELECT MIN(time_of_add) FROM events WHERE device_id = :id", nativeQuery = true)
+    @Query(nativeQuery = true,
+            value = "SELECT MIN(time_of_add) FROM events WHERE device_id = :id")
     LocalDateTime findTimeOfFirstAction(@Param("id")Long id);
 
-    @Query(value = "SELECT MAX(time_of_add) FROM events WHERE device_id = :id", nativeQuery = true)
+    @Query(nativeQuery = true,
+            value = "SELECT MAX(time_of_add) FROM events WHERE device_id = :id")
     LocalDateTime findTimeOfLastAction(@Param("id")Long id);
 
     Page<Event> findAllByDeviceId(Long id, Pageable pageable);
 
     @Query (nativeQuery = true,
-            value = "SELECT * FROM events WHERE device_id = :id AND date(time_of_add) = date(CONCAT(:date, '%'))",
-            countQuery = "SELECT count(*) FROM events WHERE device_id = :id AND date(time_of_add) = date(CONCAT(:date, '%'))")
+            value = "SELECT * " +
+                    "FROM events " +
+                    "WHERE device_id = :id " +
+                    "AND date(time_of_add) = date(CONCAT(:date, '%'))",
+            countQuery = "SELECT count(*) " +
+                    "FROM events " +
+                    "WHERE device_id = :id " +
+                    "AND date(time_of_add) = date(CONCAT(:date, '%'))")
     Page<Event> findAllByDeviceIdAndDate(@Param("id") Long id, @Param("date") String date, PageRequest pr);
 
     @Query (nativeQuery = true,

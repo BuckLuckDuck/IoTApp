@@ -22,6 +22,12 @@ public class ActiveDevicesController {
         this.activeDevicesService = activeDevicesService;
     }
 
+    /**
+     * Required by the task:
+     * Получить информацию об активных устройствах
+     * @return
+     * All active devices of last 30 minutes
+     */
     @GetMapping("/active")
     public ResponseEntity<List<ActiveDevices>> getAllActiveDevices() {
         List<ActiveDevices> activeDevices = activeDevicesService.getAllActiveDevices();

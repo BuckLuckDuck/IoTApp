@@ -20,16 +20,35 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
+    /**
+     * Required by the task: Добавление нового устройства
+     * Ways that could be used: JWT token
+     * @param device
+     * @return Device's key
+     */
     @PostMapping(value = "/device")
     public SecretKey addNewDevice(@RequestBody @NonNull Device device) {
         return deviceService.addNewDevice(device);
     }
 
+    /**
+     * Required by the task: Получить информацию о конкретном устройстве по серийному номеру
+     * @param serialNumber
+     * @return Device
+     */
     @GetMapping("/device")
-    public Device getInfoAboutDevice(@RequestParam @NonNull String serialNumber) {
+    public Device getInfoAboutDevice(@RequestParam("serialNumber") String serialNumber) {
         return deviceService.getInfoAboutDevice(serialNumber);
     }
 
+    /**
+     * Required by the task:  Получить информацию о всех добавленных в систему устройств
+     * @param type
+     * @param date
+     * @param offset
+     * @param limit
+     * @return Page that Frontends could use for pagination
+     */
     @GetMapping("/device/all")
     public Page<Device> getInfoAboutAllDevices(
             @RequestParam(value = "type", required = false, defaultValue = "%") String type,

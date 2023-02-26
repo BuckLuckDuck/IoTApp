@@ -60,7 +60,6 @@ public class EventService {
                 eventRepository.findAllByDeviceIdAndDate(device.getId(), date, pr);
     }
 
-    // TODO - throw exception in null
     public List<IEventsOfTypeDevicesCount> getStatOfEventsByDevicesType(
             String dateAfter, String dateBefore) {
         return eventRepository.countEventsByDevicesType(dateAfter, dateBefore).orElseThrow(
