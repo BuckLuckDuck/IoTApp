@@ -1,6 +1,7 @@
 package com.example.iotapp.services;
 
 import com.example.iotapp.models.Device;
+import com.example.iotapp.utility.DeviceNotFoundException;
 import com.example.iotapp.utility.SecretKey;
 import com.example.iotapp.utility.SecretKeyGenerator;
 import com.example.iotapp.repositories.DeviceRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional.*;
 
 @Service
 public class DeviceService {
@@ -23,7 +25,7 @@ public class DeviceService {
 
     public SecretKey addNewDevice(Device device) {
         // TODO - should write special GlobalExceptionHandler
-        if (deviceRepository.getDeviceBySerialNumber(device.getSerialNumber()) != null)
+        if (deviceRepository.findDeviceBySerialNumber(device.getSerialNumber()) != null)
             throw new IllegalArgumentException();
 
 
@@ -38,7 +40,8 @@ public class DeviceService {
 
     // TODO - exception handler
     public Device getInfoAboutDevice(String serialNumber) {
-        return deviceRepository.getDeviceBySerialNumber(serialNumber);
+        return deviceRepository.findDeviceBySerialNumber(serialNumber).orElseThrow(
+                () -> new DeviceNotFoundException("Device with serial number " + serialNumber + " not found"));
     }
 
     // TODO - exception handler

@@ -27,8 +27,8 @@ public class DeviceController {
     }
 
     @GetMapping("/device")
-    public ResponseEntity<Device> getInfoAboutDevice(@RequestParam @NonNull String serialNumber) {
-        return new ResponseEntity<>(deviceService.getInfoAboutDevice(serialNumber), HttpStatus.OK);
+    public Device getInfoAboutDevice(@RequestParam @NonNull String serialNumber) {
+        return deviceService.getInfoAboutDevice(serialNumber);
     }
 
     @GetMapping("/device/all")

@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface DeviceRepository extends JpaRepository<Device, Long> {
 
     @Query(value = "SELECT * FROM devices WHERE serial_number = :serialNumber", nativeQuery = true)
-    Device getDeviceBySerialNumber(@Param("serialNumber") String serialNumber);
+    Optional<Device> findDeviceBySerialNumber(@Param("serialNumber") String serialNumber);
 
     Page<Device> findAll(Pageable pageable);
 

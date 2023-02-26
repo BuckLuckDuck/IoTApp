@@ -4,6 +4,7 @@ import com.example.iotapp.models.Device;
 import com.example.iotapp.models.Event;
 import com.example.iotapp.repositories.DeviceRepository;
 import com.example.iotapp.repositories.EventRepository;
+import com.example.iotapp.utility.DeviceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,8 @@ public class EventService {
 
     public boolean createEvent(Event event, String serialNumber, String key) {
 
-        Device device = deviceRepository.getDeviceBySerialNumber(serialNumber);
+        Device device = deviceRepository.findDeviceBySerialNumber(serialNumber).orElseThrow(
+                () -> new DeviceNotFoundException("Device with serial number " + serialNumber + " not found"));;
         if (!DeviceService.validateKey(device, key))
             return false;
 
