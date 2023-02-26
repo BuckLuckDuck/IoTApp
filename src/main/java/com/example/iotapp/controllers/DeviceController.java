@@ -32,7 +32,7 @@ public class DeviceController {
 
     @GetMapping("/device/all")
     public Page<Device> getInfoAboutAllDevices(
-            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "type", required = false, defaultValue = "%") String type,
             @RequestParam(value = "date", required = false) String date,
             @RequestParam(value = "offset", defaultValue = "0")  Integer offset,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit) {

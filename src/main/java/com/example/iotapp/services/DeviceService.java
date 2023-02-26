@@ -1,6 +1,7 @@
 package com.example.iotapp.services;
 
 import com.example.iotapp.models.Device;
+import com.example.iotapp.utility.exceptions.DeviceAlreadyExistsException;
 import com.example.iotapp.utility.exceptions.DeviceNotFoundException;
 import com.example.iotapp.utility.SecretKey;
 import com.example.iotapp.utility.SecretKeyGenerator;
@@ -23,13 +24,10 @@ public class DeviceService {
     }
 
     public SecretKey addNewDevice(Device device) {
-        // TODO - change exception and logic
-        try {
-            deviceRepository.findDeviceBySerialNumber(device.getSerialNumber());
-        } catch (DeviceNotFoundException e) {
-            throw new DeviceNotFoundException(
-                    "Device with serial number " + device.getSerialNumber() + " already exists");
-        }
+
+        if (deviceRepository.findDeviceBySerialNumber(device.getSerialNumber()).isPresent())
+            throw new DeviceAlreadyExistsException("Device with serial number " +
+                    device.getSerialNumber() + " already exists");
 
         SecretKeyGenerator keyGenerator = new SecretKeyGenerator();
         SecretKey key = new SecretKey();
@@ -45,20 +43,12 @@ public class DeviceService {
                 () -> new DeviceNotFoundException("Device with serial number " + serialNumber + " not found"));
     }
 
-    // TODO - exception handler
     public Page<Device> getInfoAboutAllDevice(String type, String date, Integer offset, Integer limit) {
         PageRequest pr = PageRequest.of(offset, limit);
 
-        System.out.println(date + ' ' + type);
-
-        if (type == null && date == null)
-            return deviceRepository.findAll(pr);
-        else if (type == null)
-            return deviceRepository.findAllByDate(date, pr);
-        else if (date == null)
-            return deviceRepository.findAllByType(type, pr);
-        else
-            return deviceRepository.findAllByTypeAndDate(type, date, pr);
+        return date == null ?
+                deviceRepository.findAllByType(type, pr) :
+                deviceRepository.findAllByTypeAndDate(type, date, pr);
     }
 
     public Device getDeviceBySerialNumber(String serialNumber) {

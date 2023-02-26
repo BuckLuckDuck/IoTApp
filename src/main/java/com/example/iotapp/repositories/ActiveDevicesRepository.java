@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ActiveDevicesRepository extends JpaRepository<ActiveDevices, Long> {
 
@@ -17,5 +18,5 @@ public interface ActiveDevicesRepository extends JpaRepository<ActiveDevices, Lo
     List<ActiveDevices> findAllWithExpirationTime();
 
     @Query(value = "SELECT * FROM active_devices", nativeQuery = true)
-    List<ActiveDevices> getAllActiveDevices();
+    Optional<List<ActiveDevices>> getAllActiveDevices();
 }

@@ -4,6 +4,7 @@ import com.example.iotapp.models.Device;
 import com.example.iotapp.models.Event;
 import com.example.iotapp.repositories.EventRepository;
 import com.example.iotapp.utility.IEventsOfTypeDevicesCount;
+import com.example.iotapp.utility.exceptions.NothingFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +35,7 @@ public class EventService {
     public boolean createEvent(Event event, String serialNumber, String key) {
 
         Device device = deviceService.getDeviceBySerialNumber(serialNumber);
-        // TODO
+
         if (!DeviceService.validateKey(device, key))
             return false;
 
@@ -62,8 +63,8 @@ public class EventService {
     // TODO - throw exception in null
     public List<IEventsOfTypeDevicesCount> getStatOfEventsByDevicesType(
             String dateAfter, String dateBefore) {
-        dateAfter = dateAfter == null ? "100-12-31" : dateAfter;
-        dateBefore = dateBefore == null ? "99999-01-01" : dateBefore;
-        return eventRepository.countEventsByDevicesType(dateAfter, dateBefore);
+        return eventRepository.countEventsByDevicesType(dateAfter, dateBefore).orElseThrow(
+                () -> new NothingFoundException("Nothing found")
+        );
     }
 }

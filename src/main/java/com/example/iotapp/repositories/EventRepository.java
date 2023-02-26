@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
@@ -34,7 +35,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                     "WHERE e.time_of_add >= date(CONCAT(:dateAfter, '%')) " +
                     "AND e.time_of_add < date(CONCAT(:dateBefore, '%')) " +
                     "GROUP BY d.type")
-    List<IEventsOfTypeDevicesCount> countEventsByDevicesType(
+    Optional<List<IEventsOfTypeDevicesCount>> countEventsByDevicesType(
             @Param("dateAfter") String dateAfter,
             @Param("dateBefore") String dateBefore);
 }

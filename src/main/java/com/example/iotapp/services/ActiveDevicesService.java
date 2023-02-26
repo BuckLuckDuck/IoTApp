@@ -4,6 +4,7 @@ import com.example.iotapp.models.ActiveDevices;
 import com.example.iotapp.models.Device;
 import com.example.iotapp.repositories.ActiveDevicesRepository;
 import com.example.iotapp.repositories.EventRepository;
+import com.example.iotapp.utility.exceptions.DeviceNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +46,9 @@ public class ActiveDevicesService {
     }
 
     public List<ActiveDevices> getAllActiveDevices() {
-        return activeDevicesRepository.getAllActiveDevices();
+        return activeDevicesRepository.getAllActiveDevices().orElseThrow(
+                () -> new DeviceNotFoundException("Devices did not found")
+        );
     }
 
     @Scheduled(cron = "10 * * * * ?")

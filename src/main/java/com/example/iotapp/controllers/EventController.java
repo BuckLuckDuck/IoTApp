@@ -31,10 +31,9 @@ public class EventController {
 
         boolean created = eventService.createEvent(event, serialNumber, key);
 
-        if (!created)
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        HttpStatus status = created ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
 
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        return new ResponseEntity<>(null, status);
     }
 
     @GetMapping("/events")
@@ -48,8 +47,8 @@ public class EventController {
 
     @GetMapping("/events/statistics")
     public List<IEventsOfTypeDevicesCount> getStatOfEventsByDevicesType(
-            @RequestParam(value = "dateAfter",required = false) String dateAfter,
-            @RequestParam(value = "dateBefore", required = false) String dateBefore
+            @RequestParam(value = "dateAfter",required = false, defaultValue = "100-12-31") String dateAfter,
+            @RequestParam(value = "dateBefore", required = false, defaultValue = "99999-01-01") String dateBefore
     ) {
         return eventService.getStatOfEventsByDevicesType(dateAfter, dateBefore);
     }
