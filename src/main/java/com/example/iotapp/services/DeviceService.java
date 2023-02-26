@@ -1,7 +1,7 @@
 package com.example.iotapp.services;
 
 import com.example.iotapp.models.Device;
-import com.example.iotapp.utility.DeviceNotFoundException;
+import com.example.iotapp.utility.exceptions.DeviceNotFoundException;
 import com.example.iotapp.utility.SecretKey;
 import com.example.iotapp.utility.SecretKeyGenerator;
 import com.example.iotapp.repositories.DeviceRepository;
@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional.*;
 
 @Service
 public class DeviceService {
@@ -24,13 +23,13 @@ public class DeviceService {
     }
 
     public SecretKey addNewDevice(Device device) {
-        // TODO - change exception
-        deviceRepository.findDeviceBySerialNumber(device.getSerialNumber()).orElseThrow(
-                () -> new DeviceNotFoundException(
-                        "Device with serial number " + device.getSerialNumber() + " already exists"
-                ))
-;
-
+        // TODO - change exception and logic
+        try {
+            deviceRepository.findDeviceBySerialNumber(device.getSerialNumber());
+        } catch (DeviceNotFoundException e) {
+            throw new DeviceNotFoundException(
+                    "Device with serial number " + device.getSerialNumber() + " already exists");
+        }
 
         SecretKeyGenerator keyGenerator = new SecretKeyGenerator();
         SecretKey key = new SecretKey();

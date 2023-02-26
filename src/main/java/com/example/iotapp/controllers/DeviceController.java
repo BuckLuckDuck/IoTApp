@@ -21,9 +21,8 @@ public class DeviceController {
     }
 
     @PostMapping(value = "/device")
-    public ResponseEntity<SecretKey> addNewDevice(@RequestBody @NonNull Device device) {
-        SecretKey key = deviceService.addNewDevice(device);
-        return new ResponseEntity<>(key, HttpStatus.CREATED);
+    public SecretKey addNewDevice(@RequestBody @NonNull Device device) {
+        return deviceService.addNewDevice(device);
     }
 
     @GetMapping("/device")

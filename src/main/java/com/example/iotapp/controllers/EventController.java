@@ -2,12 +2,15 @@ package com.example.iotapp.controllers;
 
 import com.example.iotapp.models.Event;
 import com.example.iotapp.services.EventService;
+import com.example.iotapp.utility.IEventsOfTypeDevicesCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -41,5 +44,13 @@ public class EventController {
             @RequestParam(value = "offset", defaultValue = "0") Integer offset,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
         return eventService.getAllEventsWithSerialNumber(serialNumber, date, offset, limit);
+    }
+
+    @GetMapping("/events/statistics")
+    public List<IEventsOfTypeDevicesCount> getStatOfEventsByDevicesType(
+            @RequestParam(value = "dateAfter",required = false) String dateAfter,
+            @RequestParam(value = "dateBefore", required = false) String dateBefore
+    ) {
+        return eventService.getStatOfEventsByDevicesType(dateAfter, dateBefore);
     }
 }

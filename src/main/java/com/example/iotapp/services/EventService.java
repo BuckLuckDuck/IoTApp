@@ -2,15 +2,16 @@ package com.example.iotapp.services;
 
 import com.example.iotapp.models.Device;
 import com.example.iotapp.models.Event;
-import com.example.iotapp.repositories.DeviceRepository;
 import com.example.iotapp.repositories.EventRepository;
-import com.example.iotapp.utility.DeviceNotFoundException;
+import com.example.iotapp.utility.IEventsOfTypeDevicesCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class EventService {
@@ -56,5 +57,13 @@ public class EventService {
         return date == null ?
                 eventRepository.findAllByDeviceId(device.getId(), pr) :
                 eventRepository.findAllByDeviceIdAndDate(device.getId(), date, pr);
+    }
+
+    // TODO - throw exception in null
+    public List<IEventsOfTypeDevicesCount> getStatOfEventsByDevicesType(
+            String dateAfter, String dateBefore) {
+        dateAfter = dateAfter == null ? "100-12-31" : dateAfter;
+        dateBefore = dateBefore == null ? "99999-01-01" : dateBefore;
+        return eventRepository.countEventsByDevicesType(dateAfter, dateBefore);
     }
 }

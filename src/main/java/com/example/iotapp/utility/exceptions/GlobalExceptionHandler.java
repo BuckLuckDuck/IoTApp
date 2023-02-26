@@ -1,4 +1,4 @@
-package com.example.iotapp.utility;
+package com.example.iotapp.utility.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
